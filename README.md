@@ -61,7 +61,8 @@ graph TD
    - Resume Parser: Extracts text and skills from resumes
    - LLM Service: Performs semantic matching (simulated or real)
    - PDF Parser: Extracts text from PDF files
-
+## VIDEO DEMO 
+  - https://drive.google.com/file/d/19TaKKVTYVFP_ue6AvtKlSrnL27aIWESj/view?usp=drive_link
 ## LLM Integration
 
 The Smart Resume Screener uses LLM technology for semantic matching between resumes and job descriptions.
