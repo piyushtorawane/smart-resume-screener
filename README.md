@@ -10,6 +10,7 @@ An intelligent resume screening tool that parses resumes, extracts skills, and m
 - [Database Schema](#database-schema)
 - [Setup Instructions](#setup-instructions)
 - [Usage](#usage)
+- [Deployment to GitHub](#deployment-to-github)
 - [File Structure](#file-structure)
 - [Dependencies](#dependencies)
 - [License](#license)
@@ -251,3 +252,29 @@ Smart Resume Scanner/
 ## License
 
 MIT
+
+## Deployment to GitHub
+
+This project is ready to be deployed to GitHub. Follow these steps:
+
+1. **Create a GitHub Repository**
+   - Go to [https://github.com](https://github.com) and log in to your account
+   - Click the "+" icon in the top right corner and select "New repository"
+   - Name your repository: `smart-resume-screener`
+   - Set visibility to "Public" (or "Private" if you prefer)
+   - **Do NOT initialize the repository with a README, .gitignore, or license**
+   - Click "Create repository"
+
+2. **Push Your Code to GitHub**
+   After creating the repository, push your local code to GitHub:
+   ```bash
+   cd "c:\Users\PIYUSH TORAWANE\Smart resume scanner"
+   git remote add origin https://github.com/piyushtorawane/smart-resume-screener.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+3. **Verify the Push**
+   After running the commands, refresh your GitHub repository page. You should see all your files uploaded.
+
+For detailed deployment instructions, see [GITHUB_DEPLOYMENT_INSTRUCTIONS.md](GITHUB_DEPLOYMENT_INSTRUCTIONS.md) which includes troubleshooting tips and next steps.
