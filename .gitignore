@@ -2,3 +2,12 @@ node_modules/
 .env
 uploads/
 *.log
+# Database files
+*.sqlite
+*.sqlite3
+# IDE files
+.vscode/
+.idea/
+# OS generated files
+Thumbs.db
+.DS_Store
