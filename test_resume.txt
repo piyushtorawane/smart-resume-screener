@@ -1,0 +1,35 @@
+Sarah Johnson
+Frontend Developer
+
+Email: sarah.johnson@email.com
+Phone: (555) 987-6543
+
+Skills:
+React, JavaScript, HTML, CSS, TypeScript, Redux, Jest, Webpack, Sass, Bootstrap, Git, RESTful APIs
+
+Experience:
+Senior Frontend Developer
+Digital Solutions Corp.
+March 2019 - Present
+- Developed responsive web applications using React and TypeScript
+- Implemented state management with Redux and Context API
+- Collaborated with UX designers to create pixel-perfect interfaces
+- Optimized application performance by 35% through code splitting and lazy loading
+- Mentored junior developers on best practices
+
+Frontend Developer
+Web Innovations LLC
+June 2016 - February 2019
+- Built interactive UI components using React and JavaScript
+- Integrated RESTful APIs for data fetching and manipulation
+- Conducted unit testing with Jest and React Testing Library
+- Participated in Agile development processes and sprint planning
+
+Education:
+Bachelor of Science in Computer Science
+State University
+2012 - 2016
+
+Certifications:
+- AWS Certified Developer
+- Google UX Design Certificate

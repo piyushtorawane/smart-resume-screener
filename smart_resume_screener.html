@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resume Screener - All-in-One Solution</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #0056b3);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card {
+            margin-bottom: 25px;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            font-weight: 600;
+            padding: 15px 20px;
+            border-radius: 12px 12px 0 0 !important;
+        }
+        
+        .match-score {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .high-score {
+            color: var(--success-color);
+        }
+        
+        .medium-score {
+            color: var(--warning-color);
+        }
+        
+        .low-score {
+            color: var(--danger-color);
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .matched-skill {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .unmatched-skill {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .result-section {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 20px;
+            margin: 25px 0;
+        }
+        
+        .stars {
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            color: #ffc107;
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .upload-area {
+            border: 2px dashed #ced4da;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(0, 123, 255, 0.03);
+        }
+        
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        .upload-area h5 {
+            color: var(--dark-text);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 10px 20px;
+            font-weight: 600;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        
+        .sample-resume {
+            background-color: #e9f7fe;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 123, 255, 0.2);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 25px 15px;
+        }
+        
+        .feature-card h5 {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar-custom {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .match-score {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header text-center">
+            <h1><i class="fas fa-file-alt me-3"></i>Smart Resume Screener</h1>
+            <p class="mb-0 lead">Intelligent Resume Parsing & Job Matching in One Place</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-upload me-2"></i>Upload Your Resume</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-area" id="dropZone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h5>Drag & Drop Your Resume Here</h5>
+                            <p class="text-muted">or</p>
+                            <button class="btn btn-primary" id="browseBtn">
+                                <i class="fas fa-folder-open me-2"></i>Browse Files
+                            </button>
+                            <input type="file" id="resumeFile" accept=".txt,.pdf" class="d-none">
+                            <p class="mt-3 mb-0 text-muted">Supported formats: TXT, PDF</p>
+                        </div>
+                        
+                        <div class="sample-resume mt-4">
+                            <h6><i class="fas fa-lightbulb me-2"></i>Tip: Use a well-structured resume for best results</h6>
+                            <p class="mb-0">Include clear sections like: Name, Contact Info, Skills, Experience, Education</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-edit me-2"></i>Or Paste Your Resume Text</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <textarea class="form-control" id="resumeText" rows="10" placeholder="Paste your resume text here..."></textarea>
+                        </div>
+                        <button id="analyzeTextBtn" class="btn btn-secondary w-100">
+                            <i class="fas fa-search me-2"></i>Analyze Resume Text
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-briefcase me-2"></i>Job Position</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="jobTitle" class="form-label">Job Title</label>
+                            <input type="text" class="form-control" id="jobTitle" value="Software Developer">
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobDescription" class="form-label">Job Description</label>
+                            <textarea class="form-control" id="jobDescription" rows="5" placeholder="Enter job description...">We are looking for a Software Developer with experience in JavaScript, React, and Node.js. The candidate should have knowledge of HTML, CSS, and RESTful APIs. Experience with Git version control and modern development practices is required.</textarea>
+                        </div>
+                        <button id="matchBtn" class="btn btn-success w-100">
+                            <i class="fas fa-sync-alt me-2"></i>Generate Match Analysis
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-bar me-2"></i>Analysis Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="resultsContainer">
+                            <div class="text-center text-muted py-5">
+                                <i class="fas fa-file-alt" style="font-size: 3rem; opacity: 0.3;"></i>
+                                <p class="mt-3 mb-0">Upload your resume or paste resume text to see analysis results</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-user me-2"></i>Extracted Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="extractedInfo">
+                            <div class="text-center text-muted py-4">
+                                <i class="fas fa-user" style="font-size: 2rem; opacity: 0.3;"></i>
+                                <p class="mt-2 mb-0">Information will appear here after processing your resume</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-star me-2"></i>How It Works</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-file-upload"></i>
+                            </div>
+                            <h5>Upload Resume</h5>
+                            <p class="text-muted">Upload your resume in TXT or PDF format</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h5>AI Parsing</h5>
+                            <p class="text-muted">Intelligent extraction of key information</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h5>Smart Matching</h5>
+                            <p class="text-muted">LLM-powered semantic analysis</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h5>Detailed Results</h5>
+                            <p class="text-muted">Comprehensive match scoring and insights</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Smart Resume Screener &copy; 2023 | Intelligent Resume Analysis Tool</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const dropZone = document.getElementById('dropZone');
+        const browseBtn = document.getElementById('browseBtn');
+        const resumeFile = document.getElementById('resumeFile');
+        const resumeText = document.getElementById('resumeText');
+        const analyzeTextBtn = document.getElementById('analyzeTextBtn');
+        const matchBtn = document.getElementById('matchBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const extractedInfo = document.getElementById('extractedInfo');
+
+        // Event Listeners
+        browseBtn.addEventListener('click', () => {
+            resumeFile.click();
+        });
+
+        resumeFile.addEventListener('change', handleFileSelect);
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#007bff';
+            dropZone.style.backgroundColor = 'rgba(0, 123, 255, 0.05)';
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.borderColor = '#ced4da';
+            dropZone.style.backgroundColor = '#fff';
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#ced4da';
+            dropZone.style.backgroundColor = '#fff';
+            
+            if (e.dataTransfer.files.length) {
+                resumeFile.files = e.dataTransfer.files;
+                handleFileSelect();
+            }
+        });
+        
+        analyzeTextBtn.addEventListener('click', () => {
+            const text = resumeText.value.trim();
+            if (!text) {
+                alert('Please paste your resume text');
+                return;
+            }
+            processResumeContent(text, 'Pasted Text');
+        });
+        
+        matchBtn.addEventListener('click', () => {
+            const candidateName = document.querySelector('#extractedInfo h5')?.textContent || 'Candidate';
+            simulateMatchResults(candidateName);
+        });
+
+        // Handle file selection
+        function handleFileSelect() {
+            const file = resumeFile.files[0];
+            if (!file) return;
+            
+            // Read file content
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                processResumeContent(content, file.name);
+            };
+            
+            if (file.type === 'application/pdf') {
+                // For PDF, we would normally use a library like pdf.js
+                // For this demo, we'll just show file info
+                showFileInfo(file);
+            } else {
+                reader.readAsText(file);
+            }
+        }
+
+        // Show file info for PDFs
+        function showFileInfo(file) {
+            const info = {
+                name: file.name,
+                size: (file.size / 1024).toFixed(2) + ' KB',
+                type: file.type,
+                lastModified: new Date(file.lastModified).toLocaleString()
+            };
+            
+            displayExtractedInfo({
+                name: 'PDF Resume File',
+                title: 'PDF Document',
+                email: 'Not extracted from PDF in this demo',
+                phone: 'Not extracted from PDF in this demo',
+                skills: ['PDF processing required for full extraction'],
+                fileInfo: info
+            });
+            
+            // Show message about PDF processing
+            resultsContainer.innerHTML = `
+                <div class="text-center py-5">
+                    <i class="fas fa-file-pdf" style="font-size: 4rem; color: #dc3545; opacity: 0.7;"></i>
+                    <h5 class="mt-3">PDF File Detected</h5>
+                    <p class="text-muted">Full PDF processing requires additional libraries.</p>
+                    <div class="alert alert-info">
+                        <strong>Note:</strong> In the complete implementation, PDF files would be fully processed 
+                        to extract text content and analyze your resume.
+                    </div>
+                    <button id="simulateMatchBtn" class="btn btn-primary mt-3">
+                        <i class="fas fa-sync-alt me-2"></i>Simulate Match Analysis
+                    </button>
+                </div>
+            `;
+            
+            // Add event listener to the simulate button
+            document.getElementById('simulateMatchBtn')?.addEventListener('click', () => {
+                simulateMatchResults('PDF Resume Candidate');
+            });
+        }
+
+        // Process resume content
+        function processResumeContent(content, fileName) {
+            // Parse the resume content
+            const parsedData = parseResume(content);
+            parsedData.fileName = fileName;
+            
+            // Display extracted information
+            displayExtractedInfo(parsedData);
+            
+            // Show initial results
+            showInitialResults();
+        }
+
+        // Parse resume content
+        function parseResume(content) {
+            // Split into lines
+            const lines = content.split('\n').map(line => line.trim()).filter(line => line !== '');
+            
+            // Initialize parsed data
+            const parsedData = {
+                name: '',
+                title: '',
+                email: '',
+                phone: '',
+                skills: []
+            };
+            
+            // Extract basic information
+            if (lines.length > 0) {
+                parsedData.name = lines[0];
+            }
+            
+            if (lines.length > 1) {
+                parsedData.title = lines[1];
+            }
+            
+            // Look for email and phone
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                // Email pattern
+                if (line.includes('@') && line.includes('.')) {
+                    parsedData.email = line.replace('Email:', '').replace('email:', '').trim();
+                }
+                // Phone pattern
+                if ((line.includes('(') && line.includes(')')) || line.replace(/\D/g, '').length >= 10) {
+                    parsedData.phone = line.replace('Phone:', '').replace('phone:', '').trim();
+                }
+            }
+            
+            // Look for skills section
+            let skillsStart = -1;
+            for (let i = 0; i < lines.length; i++) {
+                const lowerLine = lines[i].toLowerCase();
+                if (lowerLine.includes('skills') || 
+                    lowerLine.includes('technologies') || 
+                    lowerLine.includes('competencies') ||
+                    lowerLine.includes('expertise')) {
+                    skillsStart = i + 1;
+                    break;
+                }
+            }
+            
+            if (skillsStart !== -1) {
+                // Collect skills until we hit a blank line or the next section
+                for (let i = skillsStart; i < Math.min(skillsStart + 20, lines.length); i++) {
+                    const line = lines[i];
+                    const lowerLine = line.toLowerCase();
+                    
+                    // Stop if we reach another section
+                    if (lowerLine.includes('experience') || 
+                        lowerLine.includes('education') || 
+                        lowerLine.includes('work') ||
+                        lowerLine.includes('projects') ||
+                        lowerLine.includes('certifications') ||
+                        lowerLine.includes('languages') ||
+                        lowerLine.includes('summary') ||
+                        lowerLine.includes('objective')) {
+                        break;
+                    }
+                    
+                    // Extract skills from the line
+                    if (line.includes(':') && !lowerLine.includes('skills') && !lowerLine.includes('technologies')) {
+                        // Skip section headers
+                        continue;
+                    }
+                    
+                    // Split comma-separated skills
+                    const lineSkills = line.split(',').map(skill => skill.trim()).filter(skill => skill !== '');
+                    parsedData.skills = parsedData.skills.concat(lineSkills);
+                }
+            }
+            
+            // Remove duplicates from skills and filter out empty strings
+            parsedData.skills = [...new Set(parsedData.skills.filter(skill => skill !== ''))];
+            
+            return parsedData;
+        }
+
+        // Display extracted information
+        function displayExtractedInfo(data) {
+            let fileInfoHtml = '';
+            if (data.fileInfo) {
+                fileInfoHtml = `
+                    <div class="alert alert-info">
+                        <strong>File Information:</strong><br>
+                        Name: ${data.fileInfo.name}<br>
+                        Size: ${data.fileInfo.size}<br>
+                        Type: ${data.fileInfo.type}<br>
+                        Modified: ${data.fileInfo.lastModified}
+                    </div>
+                `;
+            }
+            
+            extractedInfo.innerHTML = `
+                ${fileInfoHtml}
+                <div class="mb-4">
+                    <h5>${data.name || 'Name not found'}</h5>
+                    <p class="mb-1"><strong>Title:</strong> ${data.title || 'Not found'}</p>
+                    <p class="mb-1"><strong>Email:</strong> ${data.email || 'Not found'}</p>
+                    <p class="mb-1"><strong>Phone:</strong> ${data.phone || 'Not found'}</p>
+                </div>
+                
+                <div>
+                    <h6 class="section-title">Extracted Skills (${data.skills.length})</h6>
+                    <div>
+                        ${data.skills.length > 0 ? 
+                          data.skills.map(skill => `<span class="skill-tag matched-skill">${skill}</span>`).join('') : 
+                          '<p class="text-muted">No skills extracted</p>'}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Show initial results
+        function showInitialResults() {
+            resultsContainer.innerHTML = `
+                <div class="text-center py-4">
+                    <i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>
+                    <h5 class="mt-3">Resume Processed Successfully</h5>
+                    <p class="text-muted">Your resume has been analyzed. Click "Generate Match Analysis" to see how well you match job requirements.</p>
+                    <button id="generateMatchBtn" class="btn btn-primary mt-3">
+                        <i class="fas fa-sync-alt me-2"></i>Generate Match Analysis
+                    </button>
+                </div>
+            `;
+            
+            // Add event listener to the generate button
+            document.getElementById('generateMatchBtn')?.addEventListener('click', () => {
+                const candidateName = document.querySelector('#extractedInfo h5')?.textContent || 'Candidate';
+                simulateMatchResults(candidateName);
+            });
+        }
+
+        // Simulate match results
+        function simulateMatchResults(candidateName) {
+            // Get job data
+            const jobTitle = document.getElementById('jobTitle').value || 'Software Developer';
+            const jobDescription = document.getElementById('jobDescription').value || 'Default job description';
+            
+            // Simulate a match score
+            const score = Math.floor(Math.random() * 6) + 5; // Random score between 5-10
+            
+            // Determine score class
+            let scoreClass = 'low-score';
+            let scoreText = 'Low Match';
+            if (score >= 8) {
+                scoreClass = 'high-score';
+                scoreText = 'High Match';
+            } else if (score >= 6) {
+                scoreClass = 'medium-score';
+                scoreText = 'Medium Match';
+            }
+            
+            // Sample skills for matching
+            const jobSkills = extractSkillsFromJobDescription(jobDescription);
+            const resumeSkills = getExtractedSkills();
+            
+            // Find matching and missing skills
+            const matchingSkills = jobSkills.filter(skill => 
+                resumeSkills.some(resumeSkill => 
+                    resumeSkill.toLowerCase().includes(skill.toLowerCase()) ||
+                    skill.toLowerCase().includes(resumeSkill.toLowerCase())
+                )
+            );
+            
+            const missingSkills = jobSkills.filter(skill => 
+                !matchingSkills.includes(skill)
+            );
+            
+            resultsContainer.innerHTML = `
+                <div class="text-center mb-4">
+                    <h5>${candidateName}</h5>
+                    <p class="text-muted mb-2">${jobTitle}</p>
+                    <div class="match-score ${scoreClass}">${score}/10 - ${scoreText}</div>
+                    <div class="stars">${'★'.repeat(score)}${'☆'.repeat(10 - score)}</div>
+                </div>
+                
+                <div class="result-section">
+                    <h6 class="section-title">Justification</h6>
+                    <p>This candidate shows a strong foundation in relevant technologies with experience in key areas required for the position. The resume demonstrates proficiency in core competencies and shows potential for growth in specialized areas.</p>
+                </div>
+                
+                <div class="result-section">
+                    <h6 class="section-title">Skills Analysis</h6>
+                    <p><strong>Matching Skills:</strong></p>
+                    <div>
+                        ${matchingSkills.length > 0 ? 
+                          matchingSkills.map(skill => `<span class="skill-tag matched-skill">${skill}</span>`).join('') : 
+                          '<p class="text-muted">No matching skills found</p>'}
+                    </div>
+                    <p class="mt-3"><strong>Missing Skills:</strong></p>
+                    <div>
+                        ${missingSkills.length > 0 ? 
+                          missingSkills.map(skill => `<span class="skill-tag unmatched-skill">${skill}</span>`).join('') : 
+                          '<p class="text-success">All required skills are present!</p>'}
+                    </div>
+                </div>
+                
+                <div class="alert alert-warning">
+                    <strong><i class="fas fa-info-circle me-2"></i>Note:</strong> This is a demonstration. In the full implementation, 
+                    actual LLM processing would provide more accurate matching and detailed analysis.
+                </div>
+            `;
+        }
+
+        // Extract skills from job description
+        function extractSkillsFromJobDescription(description) {
+            // Common tech skills keywords
+            const techSkills = [
+                'javascript', 'python', 'java', 'react', 'angular', 'vue', 'node.js', 
+                'html', 'css', 'sql', 'mongodb', 'postgresql', 'aws', 'docker', 
+                'git', 'typescript', 'redux', 'express', 'restful', 'api',
+                'c++', 'c#', 'php', 'ruby', 'swift', 'kotlin', 'flutter',
+                'machine learning', 'data science', 'ai', 'tensorflow', 'pytorch',
+                'ui/ux', 'design', 'photoshop', 'illustrator', 'figma'
+            ];
+            
+            const foundSkills = [];
+            const lowerDesc = description.toLowerCase();
+            
+            techSkills.forEach(skill => {
+                if (lowerDesc.includes(skill)) {
+                    foundSkills.push(skill.charAt(0).toUpperCase() + skill.slice(1));
+                }
+            });
+            
+            return foundSkills.length > 0 ? foundSkills : ['JavaScript', 'React', 'Node.js', 'HTML', 'CSS'];
+        }
+
+        // Get extracted skills from the displayed content
+        function getExtractedSkills() {
+            const skillTags = document.querySelectorAll('#extractedInfo .skill-tag');
+            const skills = [];
+            skillTags.forEach(tag => {
+                skills.push(tag.textContent.trim());
+            });
+            return skills;
+        }
+
+        // Add sample resume text for demonstration
+        window.addEventListener('load', function() {
+            const sampleResume = `Sarah Johnson
+Frontend Developer
+
+Email: sarah.johnson@email.com
+Phone: (555) 987-6543
+
+Skills:
+React, JavaScript, HTML, CSS, TypeScript, Redux, Jest, Webpack, Sass, Bootstrap, Git, RESTful APIs
+
+Experience:
+Senior Frontend Developer
+Digital Solutions Corp.
+March 2019 - Present
+- Developed responsive web applications using React and TypeScript
+- Implemented state management with Redux and Context API
+- Collaborated with UX designers to create pixel-perfect interfaces
+- Optimized application performance by 35% through code splitting and lazy loading
+- Mentored junior developers on best practices
+
+Frontend Developer
+Web Innovations LLC
+June 2016 - February 2019
+- Built interactive UI components using React and JavaScript
+- Integrated RESTful APIs for data fetching and manipulation
+- Conducted unit testing with Jest and React Testing Library
+- Participated in Agile development processes and sprint planning
+
+Education:
+Bachelor of Science in Computer Science
+State University
+2012 - 2016
+
+Certifications:
+- AWS Certified Developer
+- Google UX Design Certificate`;
+            
+            resumeText.value = sampleResume;
+        });
+    </script>
+</body>
+</html>
